@@ -65,3 +65,7 @@ script:
 
   # Code coverage
   - coverage report
+
+  #Integrate Travis with Slack
+  notifications:
+    slack: andela:oMW0p4SYUz9dcQDEhAPl36k4

@@ -19,6 +19,7 @@ from wger.exercises.models import Exercise
 from wger.exercises.models import ExerciseComment
 from wger.exercises.models import ExerciseCategory
 from wger.exercises.models import Muscle
+from wger.gym.models import Gym
 
 
 class ExerciseCommentInline(admin.TabularInline):  # admin.StackedInline
@@ -34,3 +35,4 @@ admin.site.register(Exercise, ExerciseAdmin)
 admin.site.register(ExerciseCategory)
 admin.site.register(Language)
 admin.site.register(Muscle)
+admin.site.register(Gym)

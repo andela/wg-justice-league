@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import dj_database_url
 from wger.settings_global import *
 
 # Use 'DEBUG = True' to get more details for server errors
@@ -12,17 +13,19 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/Users/kebenei/dev/wg-justice-league/database.sqlite',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+if os.environ.get('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': '/Users/kebenei/dev/wg-justice-league/database.sqlite',
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': '',
+        }
     }
-}
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '^u&zq=gzavq5x3vc^mclj*rn7dk&hd^21@l1gx5wp9cv5(-0bh'

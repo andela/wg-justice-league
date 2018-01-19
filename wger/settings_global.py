@@ -181,7 +181,6 @@ STATICFILES_FINDERS = (
     # Django compressor
     'compressor.finders.CompressorFinder',
 )
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 #

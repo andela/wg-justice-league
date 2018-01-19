@@ -25,6 +25,24 @@ env:
   - TEST_MOBILE=True  DB=sqlite     TRAVIS_NODE_VERSION="4"
   - TEST_MOBILE=False DB=postgresql TRAVIS_NODE_VERSION="4"
   - TEST_MOBILE=False DB=sqlite     TRAVIS_NODE_VERSION="4"
+  - secure: "QeohMtRXBHbAIRifKR9bpFVAhaELiqjWZZZ99arbpXMyReQ6vk+s
+              u2bNOGoic19Yv2TSiAw2jPHjultoldBBpGMb/
+              mKOgcwyK1vM9+gM2EenH9Q9sMRwmBJnfutnv
+              5N5oW0vYp+a+QWL6w1GQMVRy7rU3KEOO0wT5
+              iCO8TFhV5Rdx0HebthzAmR9vWlWzUNgU9Ikq
+              WZxgYvzX5Rsd8sb+eECJhu8MDzdrSjV63qKn
+              WSHZolI3uBcpUSuuGXRJMQMoBO4jA7atd/yA
+              qRmFf1eGqgwgssDQ28drmwEJo9hXtW2NIj/+
+              ZeXKtl/NP8sptB5XTN27DMcSPT2YaKt4Q93xuQ
+              Mv6pJWKRFHYwdoHvGB3gx1gWGdmpqefQ6baB
+              ekv8qCXMJuzyiVlzw7t9SM+o1mp3HVo8xco8/
+              7mNc6Ktb+R12euxO+8UKvH337DQV6atrhPYX
+              gmCq1fg4yKthGawi9EVsRWUA2yQW+gKzzqsfq
+              cV/jc5xywH1s29ILXRONB0fQRJSSG9u34tlEhp
+              /db90OasYRpTy51KvSK15IE9C8+rt+UQSzGqA/
+              2dA8Pj8vL6p1HmZ1iDxLsLrnQpZfXMnvQ4GicXj
+              Ms2CiD4dgIwkA9sRCamE5mkKDoxzi4ByGINhZygx
+              EH+uoHV4MmZ0evAgSFz7AA95dup7vaG/ipnNbuE="
 
 # Install the application
 install:
@@ -68,7 +86,7 @@ script:
 
   #Integrate Travis with Slack
 notifications:
-  slack: andela:oMW0p4SYUz9dcQDEhAPl36k4
+  slack: super_secret
   email:
     on_success: never
     on_failure: never

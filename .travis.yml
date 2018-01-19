@@ -69,17 +69,7 @@ script:
 
   #Integrate Travis with Slack
 notifications:
-  slack:
-    - secure: "o7Jun50FZouREFfPMZEgl7qzMUGKBJAP8SqLlbW7XJmG/h8QcPUJPrVgfLeTeT0fl7
-    ughxrEGvFw+RsdbwitUjbIUPrrBiczbIrNP6xdgz81tN7EHy7UvvrfE6afVEsenoz+dkkK
-    lKCbcHnvU4d5HQBDGd+vrkZjVv+5w2ov0H9yhTht/iBFkffEj4ZU6yxGOiS1osuAVTaEDZ
-    zXMBB31S65N+UjbTJ4kE22aJTgT2zT0xSUlJs11WUFQJm9iEGfMtoOAIfDgh3RTGMJ5nq7
-    4PQx5VgAiGNZx1uysQrn2+Cx8Fd+z44xKGostxhr5EDPIeiTbiXlw/gqD3dY39KFpJcRRw
-    86/fp9deeXKDw7nvpVRIZbnlpB7ULzeHnl4QogEp8F3RNB/8DQ55vrg6g2HF6rfdJfOvtV
-    ZKupHTZtH0JD6eUtXq3RKwPFnW2cBsVcw1WU0xljuiDBEpLQK8Zd8EMCk8wCXAhowCE0XN
-    oWshMDIZ1gyKln2x2U2dx973OwOUdoOzOVqKq49PnEWtZI2hQZ9aSK/MlD53iqj1mKJSGW
-    0QzBhH+8gKVbJ9N3sP2VIexmzBMuiJGMhOJ4kpTZ+T4dXfxTU+CfPqlH53P30
-    1KkxsukBbUV9PeQwzGJfbqaMFHCea+sdoeCNWdYSsi5Md0yM/D76Br9Znjm2qVZqTQ="
+  slack: andela:oMW0p4SYUz9dcQDEhAPl36k4andela:oMW0p4SYUz9dcQDEhAPl36k4
 
   email:
     on_success: never

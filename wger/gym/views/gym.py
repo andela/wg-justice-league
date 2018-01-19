@@ -107,7 +107,6 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin, L
         for u in Gym.objects.get_members(self.kwargs['pk']).select_related('usercache'):
             out['members'].append({'obj': u,
                                    'last_log': u.usercache.last_activity})
-        print(out['members'])
 
         # admins list
         for u in Gym.objects.get_admins(self.kwargs['pk']):
@@ -117,10 +116,6 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin, L
                                             'gym_trainer': u.has_perm('gym.gym_trainer'),
                                             'any_admin': is_any_gym_admin(u)}
                                   })
-        print('='*20)
-        print(out['admins'])
-        print('='*20)
-        print(out)
         return out
 
     def get_context_data(self, **kwargs):

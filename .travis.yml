@@ -25,24 +25,7 @@ env:
   - TEST_MOBILE=True  DB=sqlite     TRAVIS_NODE_VERSION="4"
   - TEST_MOBILE=False DB=postgresql TRAVIS_NODE_VERSION="4"
   - TEST_MOBILE=False DB=sqlite     TRAVIS_NODE_VERSION="4"
-  - secure: "QeohMtRXBHbAIRifKR9bpFVAhaELiqjWZZZ99arbpXMyReQ6vk+s
-              u2bNOGoic19Yv2TSiAw2jPHjultoldBBpGMb/
-              mKOgcwyK1vM9+gM2EenH9Q9sMRwmBJnfutnv
-              5N5oW0vYp+a+QWL6w1GQMVRy7rU3KEOO0wT5
-              iCO8TFhV5Rdx0HebthzAmR9vWlWzUNgU9Ikq
-              WZxgYvzX5Rsd8sb+eECJhu8MDzdrSjV63qKn
-              WSHZolI3uBcpUSuuGXRJMQMoBO4jA7atd/yA
-              qRmFf1eGqgwgssDQ28drmwEJo9hXtW2NIj/+
-              ZeXKtl/NP8sptB5XTN27DMcSPT2YaKt4Q93xuQ
-              Mv6pJWKRFHYwdoHvGB3gx1gWGdmpqefQ6baB
-              ekv8qCXMJuzyiVlzw7t9SM+o1mp3HVo8xco8/
-              7mNc6Ktb+R12euxO+8UKvH337DQV6atrhPYX
-              gmCq1fg4yKthGawi9EVsRWUA2yQW+gKzzqsfq
-              cV/jc5xywH1s29ILXRONB0fQRJSSG9u34tlEhp
-              /db90OasYRpTy51KvSK15IE9C8+rt+UQSzGqA/
-              2dA8Pj8vL6p1HmZ1iDxLsLrnQpZfXMnvQ4GicXj
-              Ms2CiD4dgIwkA9sRCamE5mkKDoxzi4ByGINhZygx
-              EH+uoHV4MmZ0evAgSFz7AA95dup7vaG/ipnNbuE="
+  
 
 # Install the application
 install:
@@ -86,7 +69,18 @@ script:
 
   #Integrate Travis with Slack
 notifications:
-  slack: super_secret
+  slack:
+    - secure: "o7Jun50FZouREFfPMZEgl7qzMUGKBJAP8SqLlbW7XJmG/h8QcPUJPrVgfLeTeT0fl7
+    ughxrEGvFw+RsdbwitUjbIUPrrBiczbIrNP6xdgz81tN7EHy7UvvrfE6afVEsenoz+dkkK
+    lKCbcHnvU4d5HQBDGd+vrkZjVv+5w2ov0H9yhTht/iBFkffEj4ZU6yxGOiS1osuAVTaEDZ
+    zXMBB31S65N+UjbTJ4kE22aJTgT2zT0xSUlJs11WUFQJm9iEGfMtoOAIfDgh3RTGMJ5nq7
+    4PQx5VgAiGNZx1uysQrn2+Cx8Fd+z44xKGostxhr5EDPIeiTbiXlw/gqD3dY39KFpJcRRw
+    86/fp9deeXKDw7nvpVRIZbnlpB7ULzeHnl4QogEp8F3RNB/8DQ55vrg6g2HF6rfdJfOvtV
+    ZKupHTZtH0JD6eUtXq3RKwPFnW2cBsVcw1WU0xljuiDBEpLQK8Zd8EMCk8wCXAhowCE0XN
+    oWshMDIZ1gyKln2x2U2dx973OwOUdoOzOVqKq49PnEWtZI2hQZ9aSK/MlD53iqj1mKJSGW
+    0QzBhH+8gKVbJ9N3sP2VIexmzBMuiJGMhOJ4kpTZ+T4dXfxTU+CfPqlH53P30
+    1KkxsukBbUV9PeQwzGJfbqaMFHCea+sdoeCNWdYSsi5Md0yM/D76Br9Znjm2qVZqTQ="
+
   email:
     on_success: never
     on_failure: never

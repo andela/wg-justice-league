@@ -111,6 +111,9 @@ class CacheKeyMapper(object):
         return self.WORKOUT_CANONICAL_REPRESENTATION.format(self.get_pk(param))
 
     def get_nutritional_info(self, param):
+        '''
+        Return the nutrition cache key
+        '''
         return self.NUTRITION_PLAN_NUTRITIONAL_INFO.format(self.get_pk(param))
 
     def get_workout_log_list(self, hash_value):

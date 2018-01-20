@@ -28,6 +28,7 @@
     "gulp-eslint": "^3.0.1"
   },
   "dependencies": {
-    "bower": "^1.8.2"
+    "bower": "^1.8.2",
+    "jslint": "^0.11.0"
   }
 }

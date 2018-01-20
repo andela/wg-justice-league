@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/andela/wg-justice-league.svg?branch=ft-slack-integration-TravisCl-154240246)](https://travis-ci.org/andela/wg-justice-league)
+
 Thank you for downloading wger Workout Manager. wger (ˈvɛɡɐ) is a free, open source web
 application that manages your exercises and personal workouts, weight and diet
 plans. It can also be used as a simple gym management utility, providing different

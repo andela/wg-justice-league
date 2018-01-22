@@ -6,7 +6,7 @@ from django.apps import AppConfig
 
 
 class NutritionPlanConfig(AppConfig):
-    name         = 'wger.nutrition'
+    name = 'wger.nutrition'
     verbose_name = 'NutritionPlan'
 
     def ready(self):

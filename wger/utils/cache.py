@@ -65,7 +65,7 @@ class CacheKeyMapper(object):
     LANGUAGE_CONFIG_CACHE_KEY = 'language-config-{0}-{1}'
     EXERCISE_CACHE_KEY_MUSCLE_BG = 'exercise-muscle-bg-{0}'
     INGREDIENT_CACHE_KEY = 'ingredient-{0}'
-    NUTRITION_PLAN_NUTRITIONAL_INFO  = 'nutrition-plan-nutritional-info-{0}'
+    NUTRITION_PLAN_NUTRITIONAL_INFO = 'nutrition-plan-nutritional-info-{0}'
     WORKOUT_CANONICAL_REPRESENTATION = 'workout-canonical-representation-{0}'
     WORKOUT_LOG_LIST = 'workout-log-hash-{0}'
 

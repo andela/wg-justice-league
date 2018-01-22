@@ -164,9 +164,9 @@ class NutritionPlan(models.Model):
         expensive calculations of the `get_nutritional_values()` everytime that
         we need to display nutritional value information.
         '''
-        result = cache.get(cache_mapper.get_nutritional_info( self.pk))
+        result = cache.get(cache_mapper.get_nutritional_info(self.pk))
         if not result:
-            result =  self.get_nutritional_values()
+            result = self.get_nutritional_values()
 
             # Save to cache
             cache.set(cache_mapper.get_nutritional_info(self.pk), result)

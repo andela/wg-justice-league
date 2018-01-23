@@ -293,7 +293,7 @@ class WeightlogTestCase(WorkoutManagerTestCase):
         session3.date = datetime.date(2014, 1, 5)
         session3.save()
 
-        self.assertEqual(l.get_workout_session(), session1)
+        self.assertEqual(log.get_workout_session(), session1)
 
 
 class WeightLogDeleteTestCase(WorkoutManagerDeleteTestCase):

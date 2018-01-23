@@ -113,7 +113,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
 
-    #Django debug toolbar
+    # Django debug toolbar
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     # Javascript Header. Sends helper headers for AJAX

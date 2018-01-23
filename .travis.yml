@@ -25,6 +25,7 @@ env:
   - TEST_MOBILE=True  DB=sqlite     TRAVIS_NODE_VERSION="4"
   - TEST_MOBILE=False DB=postgresql TRAVIS_NODE_VERSION="4"
   - TEST_MOBILE=False DB=sqlite     TRAVIS_NODE_VERSION="4"
+  
 
 # Install the application
 install:
@@ -43,11 +44,12 @@ install:
   - if [[ "$DB" = "postgresql" ]]; then pip install psycopg2; fi
 
   # Setup application
-  - if [[ "$DB" = "sqlite" ]]; then invoke create_settings; fi
-  - if [[ "$DB" = "postgresql" ]]; then invoke create_settings --database-type postgresql; fi
+  - if [[ "$DB" = "sqlite" ]]; then invoke create-settings; fi
+  - if [[ "$DB" = "postgresql" ]]; then invoke create-settings --database-type postgresql; fi
 
 # Create test databases
 before_script:
+  - npm install -g gulp-cli
   - if [[ "$DB" = "postgresq" ]]; then psql -c 'DROP DATABASE IF EXISTS test_wger;' -U postgres; fi
   - if [[ "$DB" = "postgresql" ]]; then psql -c 'CREATE DATABASE test_wger;' -U postgres; fi
 
@@ -57,7 +59,7 @@ script:
   - pep8 wger
 
   # Javascript linting
-  - gulp lint
+  - gulp lint 
 
   # Regular application
   - coverage run --source='.' ./manage.py test
@@ -65,3 +67,21 @@ script:
 
   # Code coverage
   - coverage report
+
+  #Integrate Travis with Slack
+notifications:
+  slack: 
+  - secure: "uhgN2+9sBKc97lthBiy2bCjoys8geV8fgTR0lvTmMpTqx+5KTqTW884uUCGAB06C01d
+  /9uvyXhlHkg2+2hKUEdpofp/auYL5HQjUHj1cDt5ZcSTJAId6uWun/99MVLUp+zUUyxieUcYydqost
+  kJD3ctlkskg73xURTrF+F3BaTCaJgrChNCVgzcDxOnMg+MwM40xJbYKjTdQ0t7bWNS3s7AR3Kp7t+Q
+  01IFuLtnaQoqHs11g9naXBTDnYvKKcGgybl9vlUyMq1b5JL8ysc6uxGNIGLgOkB1z/2JDhNpLwIp+0
+  1ptC6WVFPmCGDx54duCRexRTQzmzrGMrr2+yBn4ierNX0OkFQ75/Nv/1b8GkEwLlbJlpIs8Jg6E/f2
+  HXw+nPYZpGwnx7zaXLNqkIjYx0gx+II4JWN6ulSIkI+uQwSOq8tMoBuW8mC19l5X65D9FxC1MEBv3O
+  NwSrRySQhnV7GLv/GEtO1B/FfTpm264soEc9hZlwnms4nxEKldGTiTDElebWQhcO8+Dk2y9oCAhObN
+  UEird2CSNHZNhKmDhEepLMMb1S+Gu/58gkwNDWvHHAki63YTRq/t+semMIgqzlk9cHM4PmnL/jKYyr
+  gI8T6fVsBsIXreFD3LXJo2CUN5mdRw8DbjVgRSSiR0pMrcz0xYNsNcQYLTejL0E+3scz7I="
+
+  email:
+    on_success: never
+    on_failure: never
+

@@ -170,6 +170,24 @@ class NutritionPlan(models.Model):
 
         return result
 
+    @property
+    def nutritional_info(self):
+        '''
+        Returns nutritional information
+
+        This method introduces caching of the nutritional values data structure.
+        It is added as a performance boost as it enables us to avoid doing the
+        expensive calculations of the `get_nutritional_values()` everytime that
+        we need to display nutritional value information.
+        '''
+        result = cache.get(cache_mapper.get_nutritional_info(self.pk))
+        if not result:
+            result = self.get_nutritional_values()
+
+            # Save to cache
+            cache.set(cache_mapper.get_nutritional_info(self.pk), result)
+        return result
+
     def get_closest_weight_entry(self):
         '''
         Returns the closest weight entry for the nutrition plan.

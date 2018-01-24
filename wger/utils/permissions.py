@@ -81,3 +81,13 @@ class UpdateOnlyPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         return (request.user and request.user.is_authenticated()
                 and request.method in ['GET', 'HEAD', 'OPTIONS', 'PATCH'])
+
+
+class CreateUsersViaAPI(permissions.BasePermission):
+    '''
+    Custom permission that allows users to create other users via the API.
+    The users creating other users is an abstraction for applications (clients)
+    registering users via the Wger API.
+    '''
+    def has_permission(self, request, view):
+        return request.user.userprofile.can_create_users_via_api

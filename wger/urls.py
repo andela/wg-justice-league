@@ -76,6 +76,7 @@ v1_api.register(weight_api.WeightEntryResource())
 
 v1_api.register(core_api.LanguageResource())
 v1_api.register(core_api.DaysOfWeekResource())
+# v1_api.register(core_api.UserResource())
 v1_api.register(core_api.UserProfileResource())
 v1_api.register(core_api.LicenseResource())
 
@@ -94,6 +95,7 @@ router.register(r'setting', manager_api_views.SettingViewSet, base_name='Setting
 router.register(r'workoutlog', manager_api_views.WorkoutLogViewSet, base_name='workoutlog')
 
 # Core app
+router.register(r'users', core_api_views.UserRegisterViewSet, base_name='users')
 router.register(r'userprofile', core_api_views.UserProfileViewSet, base_name='userprofile')
 router.register(r'language', core_api_views.LanguageViewSet, base_name='language')
 router.register(r'daysofweek', core_api_views.DaysOfWeekViewSet, base_name='daysofweek')

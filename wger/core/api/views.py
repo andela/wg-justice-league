@@ -23,10 +23,25 @@ from rest_framework.decorators import detail_route
 from wger.core.models import (UserProfile, Language, DaysOfWeek, License,
                               RepetitionUnit, WeightUnit)
 from wger.core.api.serializers import (
-    UsernameSerializer, LanguageSerializer, DaysOfWeekSerializer,
-    LicenseSerializer, RepetitionUnitSerializer, WeightUnitSerializer)
+    UserRegistrationSerializer,
+    UsernameSerializer,
+    LanguageSerializer,
+    DaysOfWeekSerializer,
+    LicenseSerializer,
+    RepetitionUnitSerializer,
+    WeightUnitSerializer
+)
 from wger.core.api.serializers import UserprofileSerializer
 from wger.utils.permissions import UpdateOnlyPermission, WgerPermission
+
+
+class UserRegisterViewSet(viewsets.ModelViewSet):
+    '''
+    API endpoint for user objects
+    '''
+    serializer_class = UserRegistrationSerializer
+    queryset = User.objects.all()
+    is_private = True
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):

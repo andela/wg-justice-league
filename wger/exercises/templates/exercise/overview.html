@@ -106,6 +106,9 @@ $(document).ready(function() {
         Side bar
 -->
 {% block sidebar %}
+<div class="btn-group col-sm-12" style="padding-bottom: 15px; padding-left: unset;">
+    <a href="{% url 'fitbit_sync' %}" class="btn btn-default btn-sm  fitbit_button"> Fitbit exercises </a>          
+</div>
 <h4>{% trans "Search" %}</h4>
     <input name="term"
            type="search"

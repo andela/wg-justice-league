@@ -14,7 +14,11 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
+import os
 import logging
+import requests
+
+import fitbit
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
@@ -251,6 +255,38 @@ def registration(request):
     template_data['extend_template'] = 'base.html'
 
     return render(request, 'form.html', template_data)
+
+
+@login_required
+def fitbit_sync(request, code="None"):
+    '''
+    Get user data from fitbit
+    '''
+    template_data = {}
+    client_id = settings.FITBIT_CLIENT_ID
+    client_secret = settings.FITBIT_CLIENT_SECRET
+    redirect_url = settings.FITBIT_CALLBACK_URI
+
+    fitbit_client = fitbit.FitbitOauth2Client(client_id, client_secret)
+
+    if 'code' in request.GET:
+        code = request.GET.get("code", "")
+        form = {
+            'client_secret': client_secret,
+            'code': code,
+            'client_id': client_id,
+            'grant_type': 'authorization_code',
+            'redirect_uri': redirect_url
+        }
+
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    template_data['fitbit_auth_link'] = \
+        fitbit_client.authorize_token_url(
+            redirect_uri=redirect_url,
+            prompt='consent')[0]
+    return render(request, 'user/fitbit.html', template_data)
 
 
 @login_required

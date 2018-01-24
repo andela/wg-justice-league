@@ -287,7 +287,7 @@ div.info a:active {
  * Fitbit info styling
  **************************************************************/
 
-button.fitbit_button {
+a.fitbit_button {
     border: none;
     height: 100%;
     background: #09afb9;
@@ -296,7 +296,8 @@ button.fitbit_button {
     border-radius: 0.2em !important;
     width: 70%;
 }
-button.fitbit_button:hover {
+a.fitbit_button:hover,
+a.fitbit_button:focus {
     background-color: #09afb9e0 !important;
     color: #fff;
 }

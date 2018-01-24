@@ -168,6 +168,43 @@ def overview(request, username=None):
     return render(request, 'overview.html', template_data)
 
 
+
+def comparision(request, username=None):
+    '''
+    Shows a plot with the weight data
+
+    More info about the D3 library can be found here:
+        * https://github.com/mbostock/d3
+        * http://d3js.org/
+    '''
+    is_owner, user = check_access(request.user, username)
+
+    template_data = {}
+
+    min_date = WeightEntry.objects.filter(user=user).\
+        aggregate(Min('date'))['date__min']
+    max_date = WeightEntry.objects.filter(user=user).\
+        aggregate(Max('date'))['date__max']
+    if min_date:
+        template_data['min_date'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
+                                    {'year': min_date.year,
+                                     'month': min_date.month,
+                                     'day': min_date.day}
+    if max_date:
+        template_data['max_date'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
+                                    {'year': max_date.year,
+                                     'month': max_date.month,
+                                     'day': max_date.day}
+
+    last_weight_entries = helpers.get_last_entries(user)
+
+    template_data['is_owner'] = is_owner
+    template_data['owner_user'] = user
+    template_data['show_shariff'] = is_owner
+    template_data['last_five_weight_entries_details'] = last_weight_entries
+    return render(request, 'comparision.html', template_data)
+
+
 @api_view(['GET'])
 def get_weight_data(request, username=None):
     '''

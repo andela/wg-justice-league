@@ -28,6 +28,7 @@ from wger.core.models import (
     RepetitionUnit,
     WeightUnit)
 from wger.core.api.serializers import (
+    UserRegistrationSerializer,
     UsernameSerializer,
     LanguageSerializer,
     DaysOfWeekSerializer,
@@ -37,6 +38,15 @@ from wger.core.api.serializers import (
 )
 from wger.core.api.serializers import UserprofileSerializer
 from wger.utils.permissions import UpdateOnlyPermission, WgerPermission
+
+
+class UserRegisterViewSet(viewsets.ModelViewSet):
+    '''
+    API endpoint for user objects
+    '''
+    serializer_class = UserRegistrationSerializer
+    queryset = User.objects.all()
+    is_private = True
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):

@@ -32,7 +32,11 @@ from wger.core.api.serializers import (
     WeightUnitSerializer
 )
 from wger.core.api.serializers import UserprofileSerializer
-from wger.utils.permissions import UpdateOnlyPermission, WgerPermission
+from wger.utils.permissions import (
+    UpdateOnlyPermission,
+    WgerPermission,
+    CreateUsersViaAPI,
+)
 
 
 class UserRegisterViewSet(viewsets.ModelViewSet):
@@ -42,6 +46,7 @@ class UserRegisterViewSet(viewsets.ModelViewSet):
     serializer_class = UserRegistrationSerializer
     queryset = User.objects.all()
     is_private = True
+    permission_classes = (CreateUsersViaAPI,)
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):

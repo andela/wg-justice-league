@@ -17,6 +17,9 @@
 import os
 import logging
 import requests
+import base64
+import six
+import datetime
 
 import fitbit
 
@@ -257,10 +260,17 @@ def registration(request):
     return render(request, 'form.html', template_data)
 
 
+def b64encode(data):
+    if six.PY3:
+        data = data.encode('utf-8')
+    content = base64.b64encode(data).decode('utf-8')
+    return content
+
+
 @login_required
 def fitbit_sync(request, code="None"):
     '''
-    Get user data from fitbit
+    Get user weight from fitbit
     '''
     template_data = {}
     client_id = settings.FITBIT_CLIENT_ID
@@ -279,9 +289,58 @@ def fitbit_sync(request, code="None"):
             'redirect_uri': redirect_url
         }
 
+        # encode the client id to base64 in the authorization key and
+        # set type to basic
+        encoded_auth = b64encode(client_id + ':' + client_secret)
+
+        # format auth header as per fitbit guidelines
         headers = {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + encoded_auth
         }
+        response = requests.post(fitbit_client.request_token_url, form, headers=headers).json()
+
+        if "access_token" in response:
+            token = response['access_token']
+            user_id = response['user_id']
+            headers['Authorization'] = 'Bearer ' + token
+
+            if 'weight' in response['scope']:
+                period = "30d"
+                end_date = datetime.datetime.today().strftime('%Y-%m-%d')
+
+                uri = user_id + '/body/log/weight/date/{}/{}.json'.format(
+                    end_date, period)
+                response_weight = requests.get(
+                    'https://api.fitbit.com/1/user/' + uri,
+                    headers=headers)
+
+                weight = response_weight.json()['weight']
+                try:
+                    for w in weight:
+                        entry = WeightEntry()
+                        entry.weight = w['weight']
+                        entry.user = request.user
+                        entry.date = datetime.datetime.strptime(w['date'],
+                                                                '%Y-%m-%d')
+                        entry.save()
+
+                    messages.success(request, _(
+                        'Successfully retrieved weight data.'))
+
+                except Exception as error:
+                    # Check if the data is not already in the DB
+                    if "UNIQUE constraint failed" in str(error):
+                        messages.info(request, _(
+                            'Already retrieved weight data.'))
+                    else:
+                        # Validate if we have another error
+                        messages.warning(request, _(
+                            'Could not retrieve the weight data.'))
+
+            else:
+                messages.warning(request, _('Something went wrong while retrieving.'))
+
     template_data['fitbit_auth_link'] = \
         fitbit_client.authorize_token_url(
             redirect_uri=redirect_url,

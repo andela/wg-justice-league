@@ -20,7 +20,9 @@
 {# Content #}
 {#         #}
 {% block content %}
-<div id="current-username" data-current-username="{{ owner_user.username }}"></div>
+<div id="current-username" data-current-username="{{ owner_user.username }}">
+    <h3>{{ owner_user.username }}</h3>
+</div>
 
 
 {% if not min_date %}
@@ -80,41 +82,20 @@
 {% endblock %}
 
 
-{#          #}
-{# Side bar #}
-{#          #}
-{% block sidebar %}
-{% endblock %}
 
+{#                  #}
+{#  Select partner  #}
+{#                  #}
 
-
-{#         #}
-{# Options #}
-{#         #}
-{% block options %}
+{% block select %}
 {% if is_owner %}
-<div class="btn-group">
-    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="{% fa_class 'cog' %}"></span>
-        {% trans "Options" %}
-    </button>
-    <ul class="dropdown-menu">
-        <li>
-            <a href="{% url 'weight:export-csv' %}" target="_blank">
-                <span class="{% fa_class 'download' %}"></span>
-                {% trans "Export as CSV" %}
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'weight:import-csv' %}" {% auto_link_css flavour %}>
-                <span class="{% fa_class 'upload' %}"></span>
-                {% trans "Import from spreadsheet" %}
-            </a>
-        </li>
-    </ul>
+<div class="form-group">
+   <label for="sel1">Select partner to compare with:</label>
+   <select class="form-control" id="sel1">
+       {% for profile in users %}
+       <option value ="{{ profile.user.username }}">{{ profile.user.username }}</option>
+       {% endfor %}
+   </select>
 </div>
-<a href="{% url 'weight:add' %}" class="btn btn-success btn-sm wger-modal-dialog">
-    {% trans "Add" %}
-</a>
 {% endif %}
 {% endblock %}

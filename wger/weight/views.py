@@ -37,6 +37,7 @@ from rest_framework.decorators import api_view
 
 from formtools.preview import FormPreview
 
+from wger.core.models import UserProfile
 from wger.weight.forms import WeightForm
 from wger.weight.models import WeightEntry
 from wger.weight import helpers
@@ -171,12 +172,13 @@ def overview(request, username=None):
 
 def comparision(request, username=None):
     '''
-    Shows a plot with the weight data
-
-    More info about the D3 library can be found here:
-        * https://github.com/mbostock/d3
-        * http://d3js.org/
+    Show Weight comparision
     '''
+
+
+    users = UserProfile.objects.filter(ro_access= True)
+ 
+   
     is_owner, user = check_access(request.user, username)
 
     template_data = {}
@@ -202,6 +204,7 @@ def comparision(request, username=None):
     template_data['owner_user'] = user
     template_data['show_shariff'] = is_owner
     template_data['last_five_weight_entries_details'] = last_weight_entries
+    template_data['users'] = users
     return render(request, 'comparision.html', template_data)
 
 

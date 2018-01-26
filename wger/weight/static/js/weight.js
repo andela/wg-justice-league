@@ -35,14 +35,13 @@ $(document).ready(function () {
   var url;
   var url2;
   var username;
-  var other_user;
+  var otherUser;
   var chartParams;
-  var chartParams_other;
+  var chartParamsOther;
   var weightChart;
-  var weightChart_other;
+  var weightChartOther;
   weightChart = {};
-  weightChart_other = {};
- 
+  weightChartOther = {};
 
   chartParams = {
     animate_on_load: true,
@@ -59,7 +58,7 @@ $(document).ready(function () {
     colors: ['#3465a4']
   };
 
-  chartParams_other = {
+  chartParamsOther = {
     animate_on_load: true,
     full_width: true,
     top: 10,
@@ -73,7 +72,7 @@ $(document).ready(function () {
     min_y_from_data: true,
     colors: ['#3465a4']
   };
-  
+
   username = $('#current-username').data('currentUsername');
   url = '/weight/api/get_weight_data/' + username;
 
@@ -89,18 +88,18 @@ $(document).ready(function () {
     }
   });
 
-  other_user = $('#other-user').data('otherUser');
-  url2 = '/weight/api/get_weight_data/' + other_user;
+  otherUser = $('#other-user').data('otherUser');
+  url2 = '/weight/api/get_weight_data/' + otherUser;
 
   d3.json(url2, function (json) {
     var data;
     if (json.length) {
       data = MG.convert.date(json, 'date');
-      weightChart_other.data = data;
+      weightChartOther.data = data;
 
       // Plot the data
-      chartParams_other.data = data;
-      MG.data_graphic(chartParams_other);
+      chartParamsOther.data = data;
+      MG.data_graphic(chartParamsOther);
     }
   });
 

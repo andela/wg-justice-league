@@ -24,6 +24,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.utils import formats
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
@@ -169,16 +170,18 @@ def overview(request, username=None):
     return render(request, 'overview.html', template_data)
 
 
-
 def comparision(request, username=None):
     '''
     Show Weight comparision
     '''
+    other_user = None
 
+    users = UserProfile.objects.filter(ro_access=True)
+    other_username = request.GET.get("comparision_select")
 
-    users = UserProfile.objects.filter(ro_access= True)
- 
-   
+    if other_username:
+        other_user = User.objects.get(username=other_username)
+
     is_owner, user = check_access(request.user, username)
 
     template_data = {}
@@ -187,6 +190,12 @@ def comparision(request, username=None):
         aggregate(Min('date'))['date__min']
     max_date = WeightEntry.objects.filter(user=user).\
         aggregate(Max('date'))['date__max']
+
+    min_date_other_user = WeightEntry.objects.filter(user=other_user).\
+        aggregate(Min('date'))['date__min']
+    max_date_other_user = WeightEntry.objects.filter(user=other_user).\
+        aggregate(Max('date'))['date__max']
+
     if min_date:
         template_data['min_date'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
                                     {'year': min_date.year,
@@ -197,14 +206,31 @@ def comparision(request, username=None):
                                     {'year': max_date.year,
                                      'month': max_date.month,
                                      'day': max_date.day}
+    if min_date_other_user:
+        template_data['min_date_other_user'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
+                                    {'year': min_date.year,
+                                     'month': min_date.month,
+                                     'day': min_date.day}
+    if max_date_other_user:
+        template_data['max_date_other_user'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
+                                    {'year': max_date.year,
+                                     'month': max_date.month,
+                                     'day': max_date.day}
 
     last_weight_entries = helpers.get_last_entries(user)
+    last_weight_entries_for_other_user = helpers.get_last_entries(other_user)
 
     template_data['is_owner'] = is_owner
     template_data['owner_user'] = user
     template_data['show_shariff'] = is_owner
     template_data['last_five_weight_entries_details'] = last_weight_entries
+    template_data['last_weight_entries_for_other_user_details'] = last_weight_entries_for_other_user
     template_data['users'] = users
+    template_data['other_user'] = None
+
+    if other_username:
+        template_data['other_user'] = other_user
+
     return render(request, 'comparision.html', template_data)
 
 

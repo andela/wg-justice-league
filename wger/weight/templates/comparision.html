@@ -33,50 +33,12 @@
 {% endif %}
 
 <div id="weight_diagram"></div>
+{% if other_user %}
+    <div id="other-user" data-other-user="{{ other_user.username }}">
+            <h3>{{ other_user.username }}</h3>
+        </div>
 
-
-<div class="btn-group modify-time-period-controls pull-right" role="group" aria-label="..." style="padding-bottom: 1em;">
-    <button type="button" class="btn btn-default" data-time_period="90">{% trans "Last 3 months" %}</button>
-    <button type="button" class="btn btn-default" data-time_period="365">{% trans "Last 12 months" %}</button>
-    <button type="button" class="btn btn-default active" data-time_period="all">{% trans "No filter" %}</button>
-</div>
-
-
-{% if is_owner %}
-{% if last_five_weight_entries_details %}
-<table class="table">
-    <tr>
-        <th>{% trans 'Date' %}</th>
-        <th>{% trans 'Weight' %}</th>
-        <th>{% trans 'Change' context "Noun, not verb" %}</th>
-        <th>{% trans 'Days' %}</th>
-    </tr>
-    {% for entry_detail in last_five_weight_entries_details %}
-        <tr>
-            <td>{{ entry_detail.0.date }}</td>
-            <td>{{ entry_detail.0.weight }}</td>
-            <!-- weight diff and day diff below -->
-            <td>
-                {% if entry_detail.1 > 0 %}
-                    +
-                {% endif %}
-                {% if entry_detail.1 %}
-                    {{ entry_detail.1 }}
-                {% else %}
-                    -/-
-                {% endif %}
-            </td>
-            <td>
-                {% if entry_detail.2 %}
-                    {{ entry_detail.2 }}
-                {% else %}
-                    -/-
-                {% endif %}
-            </td>
-        </tr>
-    {% endfor %}
-</table>
-{% endif %}
+    <div id="weight_diagram_other_user"></div>
 {% endif %}
 
 {% endblock %}
@@ -90,12 +52,15 @@
 {% block select %}
 {% if is_owner %}
 <div class="form-group">
-   <label for="sel1">Select partner to compare with:</label>
-   <select class="form-control" id="sel1">
+    <label for="sel1">Select partner to compare with:</label>
+    <form action="{% url 'weight:comparision' owner_user.username %}" method="get" class= "form-inline">
+   <select class="form-control" id="sel1" name="comparision_select">
        {% for profile in users %}
        <option value ="{{ profile.user.username }}">{{ profile.user.username }}</option>
        {% endfor %}
    </select>
+   <button type="submit" class="btn btn-success in-line" margin-top ="10px">Submit</button>
+   </form>
 </div>
 {% endif %}
 {% endblock %}

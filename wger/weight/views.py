@@ -170,9 +170,9 @@ def overview(request, username=None):
     return render(request, 'overview.html', template_data)
 
 
-def comparision(request, username=None):
+def comparison(request, username=None):
     '''
-    Show weight comparision
+    Show weight comparison
 
     More info about the D3 library can be found here:
         * https://github.com/mbostock/d3
@@ -181,7 +181,7 @@ def comparision(request, username=None):
     other_user = None
 
     users = UserProfile.objects.filter(ro_access=True)
-    other_username = request.GET.get("comparision_select")
+    other_username = request.GET.get("comparison_select")
 
     if other_username:
         other_user = User.objects.get(username=other_username)
@@ -235,7 +235,7 @@ def comparision(request, username=None):
     if other_username:
         template_data['other_user'] = other_user
 
-    return render(request, 'comparision.html', template_data)
+    return render(request, 'comparison.html', template_data)
 
 
 @api_view(['GET'])

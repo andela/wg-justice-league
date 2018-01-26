@@ -4,7 +4,7 @@
 {#       #}
 {# Title #}
 {#       #}
-{% block title %}{% trans "Weight comparision" %}{% endblock %}
+{% block title %}{% trans "Weight comparison" %}{% endblock %}
 
 {#        #}
 {# Header #}
@@ -48,8 +48,8 @@
 {% if is_owner %}
 <div class="form-group">
     <label for="sel1">Select partner to compare with:</label>
-    <form action="{% url 'weight:comparision' owner_user.username %}" method="get" class= "form-inline">
-   <select class="form-control" id="sel1" name="comparision_select">
+    <form action="{% url 'weight:comparison' owner_user.username %}" method="get" class= "form-inline">
+   <select class="form-control" id="sel1" name="comparison_select">
        {% for profile in users %}
        <option value ="{{ profile.user.username }}">{{ profile.user.username }}</option>
        {% endfor %}

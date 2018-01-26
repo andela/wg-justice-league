@@ -76,6 +76,25 @@ class Muscle(models.Model):
         '''
         return False
 
+    def delete(self, *args, **kwargs):
+        '''
+        Reset all cached info
+        '''
+        for language in Language.objects.all():
+            delete_template_fragment_cache('muscle-overview', language.id)
+            delete_template_fragment_cache('equipment-overview', language.id)
+            delete_template_fragment_cache('exercise-overview', language.id)
+            delete_template_fragment_cache('exercise-overview-mobile', language.id)
+        exercise_container = Exercise.objects.filter(muscles=self).iterator()
+
+        # Handle cached template scraps
+        for exercise in exercise_container:
+            # Handle cached exercise objects
+            cache.delete(cache_mapper.get_exercise_muscle_bg_key(exercise.pk))
+            for set in exercise.set_set.all():
+                reset_workout_canonical_form(set.exerciseday.training.pk)
+        super(Muscle, self).delete(*args, **kwargs)
+
 
 @python_2_unicode_compatible
 class Equipment(models.Model):
@@ -104,25 +123,6 @@ class Equipment(models.Model):
         Equipment has no owner information
         '''
         return False
-
-    def delete(self, *args, **kwargs):
-        '''
-        Reset all cached info
-        '''
-        for language in Language.objects.all():
-            delete_template_fragment_cache('muscle-overview', language.id)
-            delete_template_fragment_cache('equipment-overview', language.id)
-            delete_template_fragment_cache('exercise-overview', language.id)
-            delete_template_fragment_cache('exercise-overview-mobile', language.id)
-        exercise_container = Exercise.objects.filter(muscles=self).iterator()
-
-        # Handle cached template scraps
-        for exercise in exercise_container:
-            # Handle cached exercise objects
-            cache.delete(cache_mapper.get_exercise_muscle_bg_key(exercise.pk))
-            for set in exercise.set_set.all():
-                reset_workout_canonical_form(set.exerciseday.training.pk)
-        super(Muscle, self).delete(*args, **kwargs)
 
 
 @python_2_unicode_compatible

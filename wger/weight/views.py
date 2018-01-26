@@ -172,7 +172,11 @@ def overview(request, username=None):
 
 def comparision(request, username=None):
     '''
-    Show Weight comparision
+    Show weight comparision 
+
+    More info about the D3 library can be found here:
+        * https://github.com/mbostock/d3
+        * http://d3js.org/
     '''
     other_user = None
 
@@ -208,14 +212,14 @@ def comparision(request, username=None):
                                      'day': max_date.day}
     if min_date_other_user:
         template_data['min_date_other_user'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
-                                    {'year': min_date.year,
-                                     'month': min_date.month,
-                                     'day': min_date.day}
+                                               {'year': min_date.year,
+                                                'month': min_date.month,
+                                                'day': min_date.day}
     if max_date_other_user:
         template_data['max_date_other_user'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
-                                    {'year': max_date.year,
-                                     'month': max_date.month,
-                                     'day': max_date.day}
+                                               {'year': max_date.year,
+                                                'month': max_date.month,
+                                                'day': max_date.day}
 
     last_weight_entries = helpers.get_last_entries(user)
     last_weight_entries_for_other_user = helpers.get_last_entries(other_user)

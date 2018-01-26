@@ -42,11 +42,7 @@ $(document).ready(function () {
   var weightChart_other;
   weightChart = {};
   weightChart_other = {};
-  // weightChart_other = {}
-  // chartParams_other but the taerget is a diff div
-  // other_username
-  // url for the other username
-  // use the url for d3.json
+ 
 
   chartParams = {
     animate_on_load: true,
@@ -94,7 +90,6 @@ $(document).ready(function () {
   });
 
   other_user = $('#other-user').data('otherUser');
-  console.log('Other User ' + other_user);
   url2 = '/weight/api/get_weight_data/' + other_user;
 
   d3.json(url2, function (json) {

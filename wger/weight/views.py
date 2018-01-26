@@ -172,7 +172,7 @@ def overview(request, username=None):
 
 def comparision(request, username=None):
     '''
-    Show weight comparision 
+    Show weight comparision
 
     More info about the D3 library can be found here:
         * https://github.com/mbostock/d3

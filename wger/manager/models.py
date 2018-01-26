@@ -791,7 +791,6 @@ class WorkoutSession(models.Model):
         (IMPRESSION_NEUTRAL, _('Neutral')),
         (IMPRESSION_GOOD, _('Good')),
     )
-    
     logs = models.ForeignKey(WorkoutLog,
                              verbose_name=_('Workout Log'),
                              null=True,

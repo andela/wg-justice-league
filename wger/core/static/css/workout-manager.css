@@ -291,10 +291,9 @@ a.fitbit_button {
     border: none;
     height: 100%;
     background: #09afb9;
-    padding: 0.32em;
+    padding: 0.32em 2em;
     color: #fff;
     border-radius: 0.2em !important;
-    width: 70%;
 }
 a.fitbit_button:hover,
 a.fitbit_button:focus {

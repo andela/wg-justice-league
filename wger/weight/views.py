@@ -181,12 +181,14 @@ def comparison(request, username=None):
     other_user = None
 
     users = UserProfile.objects.filter(ro_access=True)
-    other_username = request.GET.get("comparison_select")
+    other_username = request.GET.get("q")
+    is_owner, user = check_access(request.user, username)
 
     if other_username:
-        other_user = User.objects.get(username=other_username)
-
-    is_owner, user = check_access(request.user, username)
+        try:
+            other_user = User.objects.get(username=other_username)
+        except:
+            other_user = user
 
     template_data = {}
 

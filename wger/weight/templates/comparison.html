@@ -32,11 +32,27 @@
 
 <div id="weight_diagram"></div>
 {% if other_user %}
-    <div id="other-user" data-other-user="{{ other_user.username }}">
-            <h3>{{ other_user.username }}</h3>
-        </div>
+    {% if other_user == owner_user %}
+        <br>
+        <p>
+            <h3>
+                {% trans " Partner not found.Please ensure you entered partners exact username" %}
+            </h3>
+        </p>
 
-    <div id="weight_diagram_other_user"></div>
+        {% else %}
+            <div id="other-user" data-other-user="{{ other_user.username }}">
+                <h3>{{ other_user.username }}</h3>
+            </div>
+        <div id="weight_diagram_other_user"></div>
+    {% endif %}
+    {% else %}
+    <br>
+    <p>
+        <h3>
+        {% trans " Please search for your training partner" %}
+        </h3>
+    </p>
 {% endif %}
 
 {% endblock %}
@@ -47,15 +63,15 @@
 {% block select %}
 {% if is_owner %}
 <div class="form-group">
-    <label for="sel1">Select partner to compare with:</label>
-    <form action="{% url 'weight:comparison' owner_user.username %}" method="get" class= "form-inline">
-   <select class="form-control" id="sel1" name="comparison_select">
-       {% for profile in users %}
-       <option value ="{{ profile.user.username }}">{{ profile.user.username }}</option>
-       {% endfor %}
-   </select>
-   <button type="submit" class="btn btn-success in-line" margin-top ="10px">Submit</button>
-   </form>
+   <label for="searchform">Search for partner to compare with using their username:</label>
+<form id="searchform" action="{% url 'weight:comparison' owner_user.username %}" method="get" accept-charset="utf-8">
+        <button class="searchbutton" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+        <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
+      </form>
 </div>
 {% endif %}
 {% endblock %}
+
+

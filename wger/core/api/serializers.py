@@ -15,10 +15,32 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from wger.core.models import (UserProfile, Language, DaysOfWeek, License,
                               RepetitionUnit, WeightUnit)
+
+
+class UserRegistrationSerializer(serializers.ModelSerializer):
+    '''
+    User creation serializer
+    '''
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            validated_data['username'],
+            validated_data['email'],
+            validated_data['password'],
+        )
+        user_profile = user.userprofile
+        user_profile.created_via_api = True
+        user_profile.save()
+        return user
 
 
 class UserprofileSerializer(serializers.ModelSerializer):

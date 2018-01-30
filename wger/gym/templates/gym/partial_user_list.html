@@ -6,7 +6,7 @@
 <script>
 $(document).ready( function () {
     /* Make table sortable */
-    $('#main_member_list').DataTable({
+    $('#main_member_active_list', '#main_member_inactive_list').DataTable({
         paging: false,
         bFilter: true,
         bInfo : false
@@ -14,41 +14,101 @@ $(document).ready( function () {
 });
 </script>
 
-<table class="table table-hover" id="main_member_list">
-<thead>
-<tr>
-    {% for key in user_table.keys %}
-        <th>{{ key }}</th>
-    {% endfor %}
-</tr>
-</thead>
-<tbody>
-{% for current_user in user_table.users %}
-<tr>
-    <td>
-        {{current_user.obj.pk}}
-    </td>
-    <td>
-        <a href="{% url 'core:user:overview' current_user.obj.pk %}">{{current_user.obj}}</a>
-    </td>
-    <td>
-        {{current_user.obj.get_full_name}}
-    </td>
-    <td data-order="{{current_user.last_log|date:'U'}}">
-        {{current_user.last_log|default:'-/-'}}
-    </td>
-    {% if show_gym %}
-    <td>
-        {% if current_user.obj.userprofile.gym_id %}
-            <a href="{{ current_user.obj.userprofile.gym.get_absolute_url }}">
-            {{ current_user.obj.userprofile.gym }}
-            </a>
-        {% else %}
-            -/-
-        {% endif %}
-    </td>
-    {% endif %}
-</tr>
-{% endfor %}
-</tbody>
-</table>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#active" aria-controls="active" role="tab" data-toggle="tab">Active Users</a></li>
+    <li role="presentation"><a href="#inactive" aria-controls="inactive" role="tab" data-toggle="tab">Deactivated Users</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="active">
+        <!-- Active Users -->
+        <table class="table table-hover" id="main_member_active_list">
+            <thead>
+            <tr>
+                {% for key in user_table.keys %}
+                    <th>{{ key }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+                {% for current_user in user_table.users %}
+                <tr>
+                    {% if current_user.obj.is_active %}
+                        <td>
+                            {{current_user.obj.pk}}
+                        </td>
+                        <td>
+                            <a href="{% url 'core:user:overview' current_user.obj.pk %}">{{current_user.obj}}</a>
+                        </td>
+                        <td>
+                            {{current_user.obj.get_full_name}}
+                        </td>
+                        <td data-order="{{current_user.last_log|date:'U'}}">
+                            {{current_user.last_log|default:'-/-'}}
+                        </td>
+                        {% if show_gym %}
+                        <td>
+                            {% if current_user.obj.userprofile.gym_id %}
+                                <a href="{{ current_user.obj.userprofile.gym.get_absolute_url }}">
+                                {{ current_user.obj.userprofile.gym }}
+                                </a>
+                            {% else %}
+                                -/-
+                            {% endif %}
+                        </td>
+                        {% endif %}
+                    {% endif  %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade" id="inactive">
+        <!-- Deactivated users -->
+        <table class="table table-hover" id="main_member_inactive_list">
+                <thead>
+                <tr>
+                    {% for key in user_table.keys %}
+                        <th>{{ key }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for current_user in user_table.users %}
+                    <tr>
+                        {% if not current_user.obj.is_active %}
+                            <td>
+                                {{current_user.obj.pk}}
+                            </td>
+                            <td>
+                                <a href="{% url 'core:user:overview' current_user.obj.pk %}">{{current_user.obj}}</a>
+                            </td>
+                            <td>
+                                {{current_user.obj.get_full_name}}
+                            </td>
+                            <td data-order="{{current_user.last_log|date:'U'}}">
+                                {{current_user.last_log|default:'-/-'}}
+                            </td>
+                            {% if show_gym %}
+                                <td>
+                                    {% if current_user.obj.userprofile.gym_id %}
+                                        <a href="{{ current_user.obj.userprofile.gym.get_absolute_url }}">
+                                        {{ current_user.obj.userprofile.gym }}
+                                        </a>
+                                    {% else %}
+                                        -/-
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                        {% endif  %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+</div>
+
+

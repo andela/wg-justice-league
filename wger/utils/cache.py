@@ -18,7 +18,6 @@ import hashlib
 from django.core.cache import cache
 from django.utils.encoding import force_bytes
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -65,6 +64,7 @@ class CacheKeyMapper(object):
     LANGUAGE_CONFIG_CACHE_KEY = 'language-config-{0}-{1}'
     EXERCISE_CACHE_KEY_MUSCLE_BG = 'exercise-muscle-bg-{0}'
     INGREDIENT_CACHE_KEY = 'ingredient-{0}'
+    NUTRITION_PLAN_NUTRITIONAL_INFO = 'nutrition-plan-nutritional-info-{0}'
     WORKOUT_CANONICAL_REPRESENTATION = 'workout-canonical-representation-{0}'
     WORKOUT_LOG_LIST = 'workout-log-hash-{0}'
 
@@ -109,10 +109,17 @@ class CacheKeyMapper(object):
         '''
         return self.WORKOUT_CANONICAL_REPRESENTATION.format(self.get_pk(param))
 
+    def get_nutritional_info(self, param):
+        '''
+        Return the nutrition cache key
+        '''
+        return self.NUTRITION_PLAN_NUTRITIONAL_INFO.format(self.get_pk(param))
+
     def get_workout_log_list(self, hash_value):
         '''
         Return the workout canonical representation
         '''
         return self.WORKOUT_LOG_LIST.format(hash_value)
+
 
 cache_mapper = CacheKeyMapper()

@@ -191,5 +191,5 @@ class SchedulePlanForm(ModelForm):
     class Meta:
         model = Schedule
         fields = '__all__'
-    schedule_plan = forms.BooleanField()
+    Periodization_plan = forms.BooleanField()
     Select_Plan = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())

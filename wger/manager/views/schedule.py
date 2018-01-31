@@ -35,6 +35,7 @@ from wger.manager.helpers import render_workout_day
 from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.utils.helpers import make_token, check_token
 from wger.utils.pdf import styleSheet, render_footer
+from wger.manager.forms import SchedulePlanForm
 
 logger = logging.getLogger(__name__)
 
@@ -260,9 +261,8 @@ class ScheduleCreateView(WgerFormMixin, CreateView, PermissionRequiredMixin):
     '''
     Creates a new workout schedule
     '''
-
     model = Schedule
-    fields = '__all__'
+    form_class = SchedulePlanForm
     success_url = reverse_lazy('manager:schedule:overview')
     title = ugettext_lazy('Create schedule')
     form_action = reverse_lazy('manager:schedule:add')

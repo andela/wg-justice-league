@@ -22,12 +22,13 @@ from captcha.fields import ReCaptchaField
 from django.utils.translation import ugettext as _
 from django.forms import (Form, MultipleHiddenInput, ModelForm, DateField,
                           IntegerField, DecimalField, CharField, widgets,
-                          ModelChoiceField)
+                          ModelChoiceField, BooleanField, ChoiceField, RadioSelect)
+from django import forms
 
 from wger.core.models import (RepetitionUnit, WeightUnit)
 from wger.exercises.models import (Exercise, ExerciseCategory)
 from wger.manager.models import (WorkoutSession, Workout, Day, Set, Setting,
-                                 WorkoutLog)
+                                 WorkoutLog, Schedule)
 from wger.utils.widgets import (TranslatedSelectMultiple, TranslatedSelect,
                                 ExerciseAjaxSelect)
 from wger.utils.constants import DATE_FORMATS
@@ -179,3 +180,16 @@ class WorkoutSessionHiddenFieldsForm(ModelForm):
                 'rows': 3
             })
         }
+
+
+class SchedulePlanForm(ModelForm):
+    '''
+    Form to display checkbox and radio butttons to select schedule plans
+    '''
+    CHOICES = [(1, 'microcycle'), (2, 'mesocycle'), (3, 'macrocycle')]
+
+    class Meta:
+        model = Schedule
+        fields = '__all__'
+    schedule_plan = forms.BooleanField()
+    Select_Plan = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())

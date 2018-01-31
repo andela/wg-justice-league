@@ -34,6 +34,18 @@ SITE_ID = 1
 ROOT_URLCONF = 'wger.urls'
 WSGI_APPLICATION = 'wger.wsgi.application'
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+SOCIAL_AUTH_GITHUB_KEY = os.environ.get('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('SOCIAL_AUTH_GITHUB_SECRET')
+
+SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('SOCIAL_AUTH_TWITTER_SECRET')
+
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SSOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -88,6 +100,9 @@ INSTALLED_APPS = (
 
     # django-bower for installing bower packages
     'djangobower',
+
+    # social-auth-app-django
+    'social_django',
 )
 
 # added list of external libraries to be installed by bower
@@ -129,10 +144,21 @@ MIDDLEWARE_CLASSES = (
     # Django mobile
     'django_mobile.middleware.MobileDetectionMiddleware',
     'django_mobile.middleware.SetFlavourMiddleware',
+
+    # Social-auth middleware
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 )
 
-AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
-                           'wger.utils.helpers.EmailAuthBackend')
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'wger.utils.helpers.EmailAuthBackend',
+
+    #social-auth
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    )
 
 TEMPLATES = [
     {
@@ -155,7 +181,11 @@ TEMPLATES = [
                 'django_mobile.context_processors.flavour',
 
                 # Breadcrumbs
-                'django.template.context_processors.request'
+                'django.template.context_processors.request',
+
+                # Social-auth
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
             'loaders': [
                 # Django mobile

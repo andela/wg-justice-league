@@ -18,6 +18,7 @@ django-bootstrap-breadcrumbs
 sphinx
 django-sortedm2m
 django-bower
+django-debug-toolbar
 invoke
 requests
 whitenoise==3.3.1

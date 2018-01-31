@@ -697,4 +697,18 @@ $(document).ready(function () {
       '/' + token;
     window.location.href = targetUrl;
   });
+  // Handle show workout plan when the checkbox is checked
+  $('#ajax-info-content').hover(function () {
+    var triggerPlans = $(this).children()[0][5];
+    var planKind = $(this).children()[0];
+    var kinds = $(planKind).children()[6];
+    $(kinds).css('display', 'none');
+    $(triggerPlans).click(function () {
+      if (triggerPlans.checked) {
+        $(kinds).css('display', 'block');
+      } else {
+        $(kinds).css('display', 'none');
+      }
+    });
+  });
 });

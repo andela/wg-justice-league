@@ -42,6 +42,8 @@ from wger.exercises.api import views as exercises_api_views
 from wger.nutrition.api import views as nutrition_api_views
 from wger.weight.api import views as weight_api_views
 
+from wger.core.views.user import fitbit_sync
+
 #
 # REST API
 #
@@ -76,6 +78,7 @@ v1_api.register(weight_api.WeightEntryResource())
 
 v1_api.register(core_api.LanguageResource())
 v1_api.register(core_api.DaysOfWeekResource())
+# v1_api.register(core_api.UserResource())
 v1_api.register(core_api.UserProfileResource())
 v1_api.register(core_api.LicenseResource())
 
@@ -109,6 +112,7 @@ router.register(
     r'language', core_api_views.LanguageViewSet, base_name='language')
 router.register(
     r'daysofweek', core_api_views.DaysOfWeekViewSet, base_name='daysofweek')
+router.register(r'users', core_api_views.UserRegisterViewSet, base_name='users')
 router.register(r'license', core_api_views.LicenseViewSet, base_name='license')
 router.register(
     r'setting-repetitionunit',
@@ -191,7 +195,9 @@ urlpatterns = i18n_patterns(
         include('wger.config.urls', namespace='config', app_name='config')),
     url(r'gym/', include('wger.gym.urls', namespace='gym', app_name='gym')),
     url(r'email/', include('wger.email.urls', namespace='email')),
-    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='sitemap'))
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    url(r'fitbit/', fitbit_sync, name='fitbit_sync'))
+
 
 #
 # URLs without language prefix

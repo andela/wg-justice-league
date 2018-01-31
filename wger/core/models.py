@@ -118,6 +118,22 @@ class UserProfile(models.Model):
     Flag to mark a temporary user (demo account)
     '''
 
+    can_create_users_via_api = models.BooleanField(
+        verbose_name=_('Whether user can create other users via API'),
+        help_text=_('Check to enable ability to create users via API'),
+        default=False)
+    '''
+    Flag to mark ability to create users via the API
+    '''
+
+    created_via_api = models.BooleanField(
+        verbose_name=_('Whether user was created via API'),
+        help_text=_('Check to indicate whether user was created via API'),
+        default=False)
+    '''
+    Flag to mark the user as having been created via the API
+    '''
+
     #
     # User preferences
     #

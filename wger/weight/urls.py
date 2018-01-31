@@ -32,6 +32,8 @@ urlpatterns = [
         name='import-csv'),
     url(r'^overview/(?P<username>[\w.@+-]+)$', views.overview,
         name='overview'),
+    url(r'^overview/comparison/(?P<username>[\w.@+-]+)$', views.comparison,
+        name='comparison'),
     # url(r'^overview/$',
     #     views.overview,
     #     name='overview'),

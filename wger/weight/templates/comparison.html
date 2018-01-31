@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load i18n staticfiles wger_extras %}
+
+{#       #}
+{# Title #}
+{#       #}
+{% block title %}{% trans "Weight comparison" %}{% endblock %}
+
+{#        #}
+{# Header #}
+{#        #}
+{% block header %}
+<script src="{% static 'js/weight.js' %}"></script>
+
+{% endblock %}
+
+{#         #}
+{# Content #}
+{#         #}
+{% block content %}
+<div id="current-username" data-current-username="{{ owner_user.username }}">
+    <h3>{{ owner_user.username }}</h3>
+</div>
+
+
+{% if not min_date %}
+<p>
+    {% trans "There is no chart here because there are no weight entries." %}
+    {% trans "Use link to add one." %}
+</p>
+{% endif %}
+
+<div id="weight_diagram"></div>
+{% if other_user %}
+    {% if other_user == owner_user %}
+        <br>
+        <p>
+            <h3>
+                {% trans " Partner not found.Please ensure you entered partners exact username" %}
+            </h3>
+        </p>
+
+        {% else %}
+            <div id="other-user" data-other-user="{{ other_user.username }}">
+                <h3>{{ other_user.username }}</h3>
+            </div>
+        <div id="weight_diagram_other_user"></div>
+    {% endif %}
+    {% else %}
+    <br>
+    <p>
+        <h3>
+        {% trans " Please search for your training partner" %}
+        </h3>
+    </p>
+{% endif %}
+
+{% endblock %}
+
+{#                  #}
+{#  Select partner  #}
+{#                  #}
+{% block select %}
+{% if is_owner %}
+<div class="form-group">
+   <label for="searchform">Search for partner to compare with using their username:</label>
+<form id="searchform" action="{% url 'weight:comparison' owner_user.username %}" method="get" accept-charset="utf-8">
+        <button class="searchbutton" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+        <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
+      </form>
+</div>
+{% endif %}
+{% endblock %}
+
+

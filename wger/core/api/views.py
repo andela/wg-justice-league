@@ -20,14 +20,10 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route
 
-from wger.core.models import (
-    UserProfile,
-    Language,
-    DaysOfWeek,
-    License,
-    RepetitionUnit,
-    WeightUnit)
+from wger.core.models import (UserProfile, Language, DaysOfWeek, License,
+                              RepetitionUnit, WeightUnit)
 from wger.core.api.serializers import (
+    UserRegistrationSerializer,
     UsernameSerializer,
     LanguageSerializer,
     DaysOfWeekSerializer,
@@ -36,7 +32,21 @@ from wger.core.api.serializers import (
     WeightUnitSerializer
 )
 from wger.core.api.serializers import UserprofileSerializer
-from wger.utils.permissions import UpdateOnlyPermission, WgerPermission
+from wger.utils.permissions import (
+    UpdateOnlyPermission,
+    WgerPermission,
+    CreateUsersViaAPI,
+)
+
+
+class UserRegisterViewSet(viewsets.ModelViewSet):
+    '''
+    API endpoint for user objects
+    '''
+    serializer_class = UserRegistrationSerializer
+    queryset = User.objects.all()
+    is_private = True
+    permission_classes = (CreateUsersViaAPI,)
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -77,8 +87,7 @@ class LanguageViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Language.objects.all()
     serializer_class = LanguageSerializer
     ordering_fields = '__all__'
-    filter_fields = ('full_name',
-                     'short_name')
+    filter_fields = ('full_name', 'short_name')
 
 
 class DaysOfWeekViewSet(viewsets.ReadOnlyModelViewSet):
@@ -98,9 +107,7 @@ class LicenseViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = License.objects.all()
     serializer_class = LicenseSerializer
     ordering_fields = '__all__'
-    filter_fields = ('full_name',
-                     'short_name',
-                     'url')
+    filter_fields = ('full_name', 'short_name', 'url')
 
 
 class RepetitionUnitViewSet(viewsets.ReadOnlyModelViewSet):

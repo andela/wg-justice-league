@@ -33,10 +33,16 @@ function modifyTimePeriod(data, pastNumberDays) {
 
 $(document).ready(function () {
   var url;
+  var url2;
   var username;
+  var otherUser;
   var chartParams;
+  var chartParamsOther;
   var weightChart;
+  var weightChartOther;
   weightChart = {};
+  weightChartOther = {};
+
   chartParams = {
     animate_on_load: true,
     full_width: true,
@@ -46,6 +52,21 @@ $(document).ready(function () {
     show_secondary_x_label: true,
     xax_count: 10,
     target: '#weight_diagram',
+    x_accessor: 'date',
+    y_accessor: 'weight',
+    min_y_from_data: true,
+    colors: ['#3465a4']
+  };
+
+  chartParamsOther = {
+    animate_on_load: true,
+    full_width: true,
+    top: 10,
+    left: 30,
+    right: 10,
+    show_secondary_x_label: true,
+    xax_count: 10,
+    target: '#weight_diagram_other_user',
     x_accessor: 'date',
     y_accessor: 'weight',
     min_y_from_data: true,
@@ -64,6 +85,21 @@ $(document).ready(function () {
       // Plot the data
       chartParams.data = data;
       MG.data_graphic(chartParams);
+    }
+  });
+
+  otherUser = $('#other-user').data('otherUser');
+  url2 = '/weight/api/get_weight_data/' + otherUser;
+
+  d3.json(url2, function (json) {
+    var data;
+    if (json.length) {
+      data = MG.convert.date(json, 'date');
+      weightChartOther.data = data;
+
+      // Plot the data
+      chartParamsOther.data = data;
+      MG.data_graphic(chartParamsOther);
     }
   });
 

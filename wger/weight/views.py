@@ -24,6 +24,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.utils import formats
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
@@ -37,12 +38,12 @@ from rest_framework.decorators import api_view
 
 from formtools.preview import FormPreview
 
+from wger.core.models import UserProfile
 from wger.weight.forms import WeightForm
 from wger.weight.models import WeightEntry
 from wger.weight import helpers
 from wger.utils.helpers import check_access
 from wger.utils.generic_views import WgerFormMixin
-
 
 logger = logging.getLogger(__name__)
 
@@ -63,8 +64,7 @@ class WeightAddView(WgerFormMixin, CreateView):
         Read the comment on weight/models.py WeightEntry about why we need
         to pass the user here.
         '''
-        return {'user': self.request.user,
-                'date': datetime.date.today()}
+        return {'user': self.request.user, 'date': datetime.date.today()}
 
     def form_valid(self, form):
         '''
@@ -77,7 +77,10 @@ class WeightAddView(WgerFormMixin, CreateView):
         '''
         Return to overview with username
         '''
-        return reverse('weight:overview', kwargs={'username': self.object.user.username})
+        return reverse(
+            'weight:overview', kwargs={
+                'username': self.object.user.username
+            })
 
 
 class WeightUpdateView(WgerFormMixin, UpdateView):
@@ -89,7 +92,10 @@ class WeightUpdateView(WgerFormMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(WeightUpdateView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('weight:edit', kwargs={'pk': self.object.id})
+        context['form_action'] = reverse(
+            'weight:edit', kwargs={
+                'pk': self.object.id
+            })
         context['title'] = _('Edit weight entry for the %s') % self.object.date
 
         return context
@@ -98,7 +104,10 @@ class WeightUpdateView(WgerFormMixin, UpdateView):
         '''
         Return to overview with username
         '''
-        return reverse('weight:overview', kwargs={'username': self.object.user.username})
+        return reverse(
+            'weight:overview', kwargs={
+                'username': self.object.user.username
+            })
 
 
 @login_required
@@ -161,6 +170,76 @@ def overview(request, username=None):
     return render(request, 'overview.html', template_data)
 
 
+def comparison(request, username=None):
+    '''
+    Show weight comparison
+
+    More info about the D3 library can be found here:
+        * https://github.com/mbostock/d3
+        * http://d3js.org/
+    '''
+    other_user = None
+
+    users = UserProfile.objects.filter(ro_access=True)
+    other_username = request.GET.get("q")
+    is_owner, user = check_access(request.user, username)
+
+    if other_username:
+        try:
+            other_user = User.objects.get(username=other_username)
+        except:
+            other_user = user
+
+    template_data = {}
+
+    min_date = WeightEntry.objects.filter(user=user).\
+        aggregate(Min('date'))['date__min']
+    max_date = WeightEntry.objects.filter(user=user).\
+        aggregate(Max('date'))['date__max']
+
+    min_date_other_user = WeightEntry.objects.filter(user=other_user).\
+        aggregate(Min('date'))['date__min']
+    max_date_other_user = WeightEntry.objects.filter(user=other_user).\
+        aggregate(Max('date'))['date__max']
+
+    if min_date:
+        template_data['min_date'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
+                                    {'year': min_date.year,
+                                     'month': min_date.month,
+                                     'day': min_date.day}
+    if max_date:
+        template_data['max_date'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
+                                    {'year': max_date.year,
+                                     'month': max_date.month,
+                                     'day': max_date.day}
+    if min_date_other_user:
+        template_data['min_date_other_user'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
+                                               {'year': min_date.year,
+                                                'month': min_date.month,
+                                                'day': min_date.day}
+    if max_date_other_user:
+        template_data['max_date_other_user'] = 'new Date(%(year)s, %(month)s, %(day)s)' % \
+                                               {'year': max_date.year,
+                                                'month': max_date.month,
+                                                'day': max_date.day}
+
+    last_weight_entries = helpers.get_last_entries(user)
+    last_weight_entries_for_other_user = helpers.get_last_entries(other_user)
+
+    template_data['is_owner'] = is_owner
+    template_data['owner_user'] = user
+    template_data['show_shariff'] = is_owner
+    template_data['last_five_weight_entries_details'] = last_weight_entries
+    template_data['last_weight_entries_for_other_user_details'] = last_weight_entries_for_other_user
+    template_data['users'] = users
+    template_data['other_user'] = None
+
+    if other_username:
+        template_data['other_user'] = other_user
+
+    return render(request, 'comparison.html', template_data)
+
+
 @api_view(['GET'])
 def get_weight_data(request, username=None):
     '''
@@ -173,16 +252,15 @@ def get_weight_data(request, username=None):
     date_max = request.GET.get('date_max', True)
 
     if date_min and date_max:
-        weights = WeightEntry.objects.filter(user=user,
-                                             date__range=(date_min, date_max))
+        weights = WeightEntry.objects.filter(
+            user=user, date__range=(date_min, date_max))
     else:
         weights = WeightEntry.objects.filter(user=user)
 
     chart_data = []
 
     for i in weights:
-        chart_data.append({'date': i.date,
-                           'weight': i.weight})
+        chart_data.append({'date': i.date, 'weight': i.weight})
 
     # Return the results to the client
     return Response(chart_data)
@@ -197,18 +275,25 @@ class WeightCsvImportFormPreview(FormPreview):
         Context for template rendering.
         '''
 
-        return {'form': form,
-                'stage_field': self.unused_name('stage'),
-                'state': self.state,
-                'form_action': reverse('weight:import-csv')}
+        return {
+            'form': form,
+            'stage_field': self.unused_name('stage'),
+            'state': self.state,
+            'form_action': reverse('weight:import-csv')
+        }
 
     def process_preview(self, request, form, context):
-        context['weight_list'], context['error_list'] = helpers.parse_weight_csv(request,
-                                                                                 form.cleaned_data)
+        context[
+            'weight_list'], context['error_list'] = helpers.parse_weight_csv(
+                request, form.cleaned_data)
         return context
 
     def done(self, request, cleaned_data):
-        weight_list, error_list = helpers.parse_weight_csv(request, cleaned_data)
+        weight_list, error_list = helpers.parse_weight_csv(
+            request, cleaned_data)
         WeightEntry.objects.bulk_create(weight_list)
-        return HttpResponseRedirect(reverse('weight:overview',
-                                            kwargs={'username': request.user.username}))
+        return HttpResponseRedirect(
+            reverse(
+                'weight:overview', kwargs={
+                    'username': request.user.username
+                }))

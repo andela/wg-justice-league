@@ -88,9 +88,6 @@ INSTALLED_APPS = (
 
     # django-bower for installing bower packages
     'djangobower',
-
-    # django debug toolbar
-    'debug_toolbar',
 )
 
 # added list of external libraries to be installed by bower

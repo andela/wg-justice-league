@@ -707,6 +707,7 @@ $(document).ready(function () {
       'margin-left': '1em'
     });
     $(kinds).css('display', 'none');
+    $(triggerPlans).attr('checked', false);
     $(triggerPlans).click(function () {
       if (triggerPlans.checked) {
         $(kinds).css('display', 'block');

@@ -196,7 +196,9 @@ urlpatterns = i18n_patterns(
     url(r'gym/', include('wger.gym.urls', namespace='gym', app_name='gym')),
     url(r'email/', include('wger.email.urls', namespace='email')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
-    url(r'fitbit/', fitbit_sync, name='fitbit_sync'))
+    url(r'fitbit/', fitbit_sync, name='fitbit_sync'),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
+    )
 
 
 #

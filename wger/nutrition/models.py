@@ -635,8 +635,8 @@ class MealItem(models.Model):
     An item (component) of a meal
     '''
 
-    planned_meal = 'pm'
-    consumed_meal = 'cm'
+    planned_meal = 'planned meal'
+    consumed_meal = 'consumed meal'
 
     meal_choice = (
         (planned_meal, 'planned meal'),
@@ -644,7 +644,7 @@ class MealItem(models.Model):
     )
 
     choice = models.CharField(
-        max_length=2,
+        max_length=13,
         choices=meal_choice,
         default=planned_meal
     )

@@ -16,7 +16,7 @@
 {#       #}
 {# Title #}
 {#       #}
-{% block title %}{% trans "Nutrition plan" %} – {{ plan.creation_date}}{% endblock %}
+{% block title %}{% trans "Nutrition Plan" %} – {{ plan.creation_date}}{% endblock %}
 
 
 {#        #}
@@ -44,6 +44,11 @@ function wgerCustomModalInit()
 </p>
 {% endif %}
 
+{#       #}
+{# Title #}
+{#       #}
+{% block title-meal-planned %}{% trans "Planned Meal" %}{% endblock %}
+
 <table class="table table-bordered">
     <thead>
         <tr style="background: #E0E0E0;">
@@ -65,7 +70,7 @@ function wgerCustomModalInit()
     </tr>
 {% for meal in plan.meal_set.select_related %}
     {% for item in meal.mealitem_set.select_related %}
-        {% if item.choice == 'pm' %}
+        {% if item.choice == 'planned meal' %}
     <tr>
         {% ifchanged meal.pk %}
         <td rowspan="{{meal.mealitem_set.count}}">
@@ -161,7 +166,7 @@ function wgerCustomModalInit()
 {#       #}
 {# Title #}
 {#       #}
-{% block title-meal-consumed %}{% trans "Nutrition Meal Consumed" %} – {{ plan.creation_date}}{% endblock %}
+{% block title-meal-consumed %}{% trans "Meal Consumed" %}{% endblock %}
 
 <table class="table table-bordered">
     <thead>
@@ -184,7 +189,7 @@ function wgerCustomModalInit()
     </tr>
 {% for meal in plan.meal_set.select_related %}
     {% for item in meal.mealitem_set.select_related %}
-        {% if item.choice == 'cm' %}
+        {% if item.choice == 'consumed meal' %}
     <tr>
         {% ifchanged meal.pk %}
         <td rowspan="{{meal.mealitem_set.count}}">

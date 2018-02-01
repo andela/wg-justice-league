@@ -193,4 +193,4 @@ class SchedulePlanForm(ModelForm):
         model = Schedule
         fields = '__all__'
     select_plan = ChoiceWithOtherField(
-        label=_("Selected your plan"), choices=Schedule.SET_OF_CHOICES)
+        label=_("Select your plan"), choices=Schedule.SET_OF_CHOICES)

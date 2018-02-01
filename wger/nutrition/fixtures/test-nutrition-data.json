@@ -186,7 +186,7 @@
             "amount": 300, 
             "meal": 3, 
             "order": 1,
-            "choice": "pm"
+            "choice": "planned meal"
         }
     }, 
     {
@@ -307,7 +307,7 @@
             "amount": 500, 
             "meal": 11, 
             "order": 1,
-            "choice": "pm"
+            "choice": "planned meal"
         }
     }, 
     {
@@ -318,7 +318,7 @@
             "amount": 100, 
             "meal": 6, 
             "order": 1,
-            "choice": "pm"
+            "choice": "planned meal"
         }
     }, 
     {
@@ -329,7 +329,7 @@
             "amount": 100, 
             "meal": 6, 
             "order": 1,
-            "choice": "pm"
+            "choice": "planned meal"
         }
     }, 
     {
@@ -340,7 +340,7 @@
             "amount": 100, 
             "meal": 6, 
             "order": 1,
-            "choice": "pm"
+            "choice": "planned meal"
         }
     }, 
     {
@@ -351,7 +351,7 @@
             "amount": 100, 
             "meal": 6, 
             "order": 1,
-            "choice": "pm"
+            "choice": "planned meal"
         }
     }, 
     {
@@ -362,7 +362,7 @@
             "amount": 100, 
             "meal": 6, 
             "order": 1,
-            "choice": "pm"
+            "choice": "planned meal"
         }
     }
 ]

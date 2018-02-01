@@ -34,6 +34,8 @@ from wger.utils.widgets import (TranslatedSelectMultiple, TranslatedSelect,
 from wger.utils.constants import DATE_FORMATS
 from wger.utils.widgets import Html5DateInput
 
+from wger.manager.fields import ChoiceWithOtherField
+
 
 class DemoUserForm(Form):
     captcha = ReCaptchaField(
@@ -186,10 +188,10 @@ class SchedulePlanForm(ModelForm):
     '''
     Form to display checkbox and radio butttons to select schedule plans
     '''
-    CHOICES = [(1, 'microcycle'), (2, 'mesocycle'), (3, 'macrocycle')]
 
     class Meta:
         model = Schedule
         fields = '__all__'
-    Periodization_plan = forms.BooleanField()
-    Select_Plan = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
+    schedule_plan = forms.BooleanField()
+    select_plan = ChoiceWithOtherField(
+        label=_("Selected your plan"), choices=Schedule.SET_OF_CHOICES)

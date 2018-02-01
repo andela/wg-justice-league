@@ -72,7 +72,11 @@ def view(request, pk):
             'active_workout'] = schedule.get_current_scheduled_workout()
     else:
         template_data['active_workout'] = False
-
+    # Check if a schedule plan is activated then fetch the selected plan
+    if schedule.schedule_plan:
+        template_data['select_plan'] = schedule.select_plan
+    else:
+        template_data['select_plan'] = False
     schedule.get_current_scheduled_workout()
 
     template_data['uid'] = uid

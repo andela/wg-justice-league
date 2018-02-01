@@ -192,6 +192,5 @@ class SchedulePlanForm(ModelForm):
     class Meta:
         model = Schedule
         fields = '__all__'
-    schedule_plan = forms.BooleanField()
     select_plan = ChoiceWithOtherField(
         label=_("Selected your plan"), choices=Schedule.SET_OF_CHOICES)

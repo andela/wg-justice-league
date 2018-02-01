@@ -250,13 +250,18 @@ class Schedule(models.Model):
                     "in a loop (i.e. A, B, C, A, B, C, and so on)"))
     '''A flag indicating whether the schedule should act as a loop'''
 
+    schedule_plan = models.BooleanField(
+        verbose_name=_('Schedule a plan'),
+        default=False)
+    '''A flag indicating whether the schedule should have a periodic plan'''
+
     SET_OF_CHOICES = (
         ('1', 'microcycle'),
         ('2', 'mesocycle'),
         ('3', 'macrocycle'),
         ('Other', 'Other Please Specify'),
     )
-    select_plan = models.CharField(_("Selected your plan"), max_length=5, default=1)
+    select_plan = models.CharField(_("Select your plan"), max_length=5, default=1)
     '''A flag indicating to choose a plan'''
 
     def __str__(self):

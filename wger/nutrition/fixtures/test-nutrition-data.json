@@ -185,7 +185,8 @@
             "ingredient": 4, 
             "amount": 300, 
             "meal": 3, 
-            "order": 1
+            "order": 1,
+            "choice": "planned meal"
         }
     }, 
     {
@@ -305,7 +306,8 @@
             "ingredient": 1, 
             "amount": 500, 
             "meal": 11, 
-            "order": 1
+            "order": 1,
+            "choice": "planned meal"
         }
     }, 
     {
@@ -315,7 +317,8 @@
             "ingredient": 6, 
             "amount": 100, 
             "meal": 6, 
-            "order": 1
+            "order": 1,
+            "choice": "planned meal"
         }
     }, 
     {
@@ -325,7 +328,8 @@
             "ingredient": 4, 
             "amount": 100, 
             "meal": 6, 
-            "order": 1
+            "order": 1,
+            "choice": "planned meal"
         }
     }, 
     {
@@ -335,7 +339,8 @@
             "ingredient": 3, 
             "amount": 100, 
             "meal": 6, 
-            "order": 1
+            "order": 1,
+            "choice": "planned meal"
         }
     }, 
     {
@@ -345,7 +350,8 @@
             "ingredient": 2, 
             "amount": 100, 
             "meal": 6, 
-            "order": 1
+            "order": 1,
+            "choice": "planned meal"
         }
     }, 
     {
@@ -355,7 +361,8 @@
             "ingredient": 1, 
             "amount": 100, 
             "meal": 6, 
-            "order": 1
+            "order": 1,
+            "choice": "planned meal"
         }
     }
 ]

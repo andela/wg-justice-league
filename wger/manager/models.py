@@ -782,7 +782,10 @@ class WorkoutLog(models.Model):
             date = self.date
 
         try:
-            return WorkoutSession.objects.filter(user=self.user).get(date=date)
+            try:
+                return WorkoutSession.objects.filter(user=self.user).get(logs=self)
+            except:
+                return WorkoutSession.objects.filter(user=self.user).get(date=date)
         except WorkoutSession.DoesNotExist:
             return None
 
@@ -824,6 +827,10 @@ class WorkoutSession(models.Model):
         (IMPRESSION_NEUTRAL, _('Neutral')),
         (IMPRESSION_GOOD, _('Good')),
     )
+    logs = models.ForeignKey(WorkoutLog,
+                             verbose_name=_('Workout Log'),
+                             null=True,
+                             blank=True)
 
     user = models.ForeignKey(User, verbose_name=_('User'))
     '''

@@ -12,8 +12,29 @@
       method="post"
       class="form-horizontal">
     {% trans 'Login' as submit_text %}
+    
     {% render_form_fields form submit_text %}
+
+    <br />
+    <p style="text-align: center;">
+        <strong>-- OR --</strong><br /><br/>
+        <strong>LOGIN WITH:</strong><br /><br/>
+        <a href="{% url 'social:begin' 'google-oauth2' %}">
+            <span class="{% fa_class 'google' %}"></span>Google
+        </a><br />
+        <a href="{% url 'social:begin' 'github' %}">
+            <span class="{% fa_class 'github' %}"></span>Github
+        </a><br />
+        <a href="{% url 'social:begin' 'twitter' %}">
+            <span class="{% fa_class 'twitter' %}"></span>Twitter
+        </a><br />
+        <a href="{% url 'social:begin' 'facebook' %}">
+            <span class="{% fa_class 'facebook' %}"></span>Facebook
+        </a>
+    </p>
+    
 </form>
+
 {% endblock %}
 
 
@@ -33,4 +54,5 @@
         {% trans "Reset password" %}
     </a>
 </p>
+
 {% endblock %}

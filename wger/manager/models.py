@@ -255,13 +255,7 @@ class Schedule(models.Model):
         default=False)
     '''A flag indicating whether the schedule should have a periodic plan'''
 
-    SET_OF_CHOICES = (
-        ('1', 'microcycle'),
-        ('2', 'mesocycle'),
-        ('3', 'macrocycle'),
-        ('Other', 'Other Please Specify'),
-    )
-    select_plan = models.CharField(_("Select your plan"), max_length=5, default=1)
+    select_plan = models.CharField(_("Select your plan"), max_length=5, default="1")
     '''A flag indicating to choose a plan'''
 
     def __str__(self):

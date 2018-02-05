@@ -300,3 +300,10 @@ a.fitbit_button:focus {
     background-color: #09afb9e0 !important;
     color: #fff;
 }
+
+.cycleContainer {
+    margin-top: 1em;
+}
+.cycleContainer label{
+    padding-right: 1em;
+}

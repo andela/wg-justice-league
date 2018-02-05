@@ -34,9 +34,6 @@ from wger.utils.widgets import (TranslatedSelectMultiple, TranslatedSelect,
 from wger.utils.constants import DATE_FORMATS
 from wger.utils.widgets import Html5DateInput
 
-from wger.manager.fields import ChoiceWithOtherField
-
-
 class DemoUserForm(Form):
     captcha = ReCaptchaField(
         attrs={'theme': 'clean'},
@@ -192,5 +189,6 @@ class SchedulePlanForm(ModelForm):
     class Meta:
         model = Schedule
         fields = '__all__'
-    select_plan = ChoiceWithOtherField(
-        label=_("Select your plan"), choices=Schedule.SET_OF_CHOICES)
+        widgets = {
+            'select_plan': widgets.HiddenInput(),
+        }

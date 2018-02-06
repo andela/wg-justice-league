@@ -121,7 +121,9 @@ class CreateScheduleTestCase(WorkoutManagerAddTestCase):
         'name': 'My cool schedule',
         'start_date': datetime.date.today(),
         'is_active': True,
-        'is_loop': True
+        'is_loop': True,
+        'schedule_plan': 1,
+        'select_plan': "1"
     }
 
 
@@ -149,7 +151,9 @@ class EditScheduleTestCase(WorkoutManagerEditTestCase):
         'name': 'An updated name',
         'start_date': datetime.date.today(),
         'is_active': True,
-        'is_loop': True
+        'is_loop': True,
+        'schedule_plan': 1,
+        'select_plan': "1"
     }
 
 

@@ -35,6 +35,7 @@ from wger.manager.helpers import render_workout_day
 from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.utils.helpers import make_token, check_token
 from wger.utils.pdf import styleSheet, render_footer
+from wger.manager.forms import SchedulePlanForm
 
 logger = logging.getLogger(__name__)
 
@@ -71,7 +72,11 @@ def view(request, pk):
             'active_workout'] = schedule.get_current_scheduled_workout()
     else:
         template_data['active_workout'] = False
-
+    # Check if a schedule plan is activated then fetch the selected plan
+    if schedule.schedule_plan:
+        template_data['select_plan'] = schedule.select_plan
+    else:
+        template_data['select_plan'] = False
     schedule.get_current_scheduled_workout()
 
     template_data['uid'] = uid
@@ -260,9 +265,8 @@ class ScheduleCreateView(WgerFormMixin, CreateView, PermissionRequiredMixin):
     '''
     Creates a new workout schedule
     '''
-
     model = Schedule
-    fields = '__all__'
+    form_class = SchedulePlanForm
     success_url = reverse_lazy('manager:schedule:overview')
     title = ugettext_lazy('Create schedule')
     form_action = reverse_lazy('manager:schedule:add')

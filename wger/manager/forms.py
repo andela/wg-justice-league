@@ -34,6 +34,7 @@ from wger.utils.widgets import (TranslatedSelectMultiple, TranslatedSelect,
 from wger.utils.constants import DATE_FORMATS
 from wger.utils.widgets import Html5DateInput
 
+
 class DemoUserForm(Form):
     captcha = ReCaptchaField(
         attrs={'theme': 'clean'},

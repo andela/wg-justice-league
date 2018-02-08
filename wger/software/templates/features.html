@@ -21,35 +21,14 @@
     <header>
         <div class="container">
             <div class="intro-text">
-                <div class="intro-heading">{% trans "Welcome to wger" %}</div>
-                <div class="intro-lead-in">{% trans "Your body." %}</div>
-                <div class="intro-lead-in">{% trans "Your workouts." %}</div>
-                <div class="intro-lead-in">{% trans "Your data." %}</div>
-                <div class="intro-lead-in">{% trans "Your progress." %}</div>
-                {% if allow_guest_users and not user.is_authenticated %}
-                    <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl" rel="nofollow" style="margin-top: 1em;">
-                        {% trans "Try it now" %}
-                    </a>
-                {% endif %}
-
-                {% if not user.is_authenticated or user.userprofile.is_temporary %}
-                    {% if allow_registration %}
-                        <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
-                            {% trans "Register" %}
-                        </a>
-                    {% endif %}
-
-                    <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
-                        {% trans "Login" %}
-                    </a>
-                {% endif %}
+                <div class="intro-heading">{% trans "wger" %}</div>
+                <div class="intro-lead-in">{% trans "It's easy & user-friendly. No credit card or commitments. We promise you’ll love it!" %}</div>
             </div>
         </div>
     </header>
 
     <!-- Services Section -->
     <section id="services" class="bg-darkest-gray">
-        <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading text-light">{% trans "Your advantages" %}</h2>
@@ -109,6 +88,27 @@
                         {% trans "You can also enter notes and a general impression (great, neutral, etc.)" %}
                     </p>
                 </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-lg-12">
+            {% if allow_guest_users and not user.is_authenticated %}
+                <a href="{% url 'core:user:demo-entries' %}" class="page-scroll btn btn-xl" rel="nofollow" style="margin-top: 3em;">
+                    {% trans "Try it now" %}
+                </a>
+            {% endif %}
+
+            {% if not user.is_authenticated or user.userprofile.is_temporary %}
+                {% if allow_registration %}
+                    <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 3em;">
+                        {% trans "Register" %}
+                    </a>
+                {% endif %}
+
+                <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 3em;">
+                    {% trans "Login" %}
+                </a>
+            {% endif %}
             </div>
         </div>
     </section>

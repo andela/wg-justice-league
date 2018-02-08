@@ -26,6 +26,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy, ugettext as _
 from django.views.generic import (DeleteView, CreateView, UpdateView, ListView)
 
+from wger.core.models import Language
 from wger.nutrition.forms import UnitChooserForm
 from wger.nutrition.models import Ingredient
 from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
@@ -55,10 +56,20 @@ class IngredientListView(ListView):
         (the user can also want to see ingredients in English, in addition to his
         native language, see load_ingredient_languages)
         '''
-        languages = load_ingredient_languages(self.request)
-        return (Ingredient.objects.filter(language__in=languages)
-                .filter(status__in=Ingredient.INGREDIENT_STATUS_OK).only(
-                    'id', 'name'))
+
+        query_language = self.request.GET.get('lang', None)
+        language = None
+        if query_language:
+            ln = Language.objects.filter(short_name=query_language)
+            if ln.exists():
+                language = ln.first().id
+        if language:
+            return (Ingredient.objects.filter(language=language)
+                    .filter(status__in=Ingredient.INGREDIENT_STATUS_OK).only(
+                        'id', 'name'))
+        return (Ingredient.objects.filter(
+                        status__in=Ingredient.INGREDIENT_STATUS_OK).only(
+                        'id', 'name'))      
 
     def get_context_data(self, **kwargs):
         '''

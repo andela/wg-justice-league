@@ -67,7 +67,6 @@ class ExerciseIndexTestCase(WorkoutManagerTestCase):
         '''
         Tests the exercise overview page
         '''
-
         response = self.client.get(reverse('exercise:exercise:overview'))
 
         # Page exists
@@ -81,7 +80,7 @@ class ExerciseIndexTestCase(WorkoutManagerTestCase):
         self.assertEqual(category_1.id, 2)
         self.assertEqual(category_1.name, "Another category")
 
-        # The order of the categories changed if a user is allowed to 
+        # The order of the categories changed if a user is allowed to
         # view exercise for all languages at first galance.
         category_2 = response.context['exercises'][2].category
         self.assertEqual(category_2.id, 3)

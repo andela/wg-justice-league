@@ -74,6 +74,7 @@ class ExerciseListView(ListView):
         return Exercise.objects.accepted() \
             .order_by('category__id') \
             .select_related()
+
     def get_context_data(self, **kwargs):
         '''
         Pass additional data to the template

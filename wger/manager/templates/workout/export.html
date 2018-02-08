@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block title %}{% trans "Export Workouts" %}{% endblock %}
+
+
+{% block content %}
+  <h3>Your workouts data is ready, please click download button</h3>
+
+  <div class="btn-group">
+      <a href="{% url 'manager:workout:download_export' %}"
+         class="btn btn-primary btn-sm dropdown-toggle" >
+          {% trans "Download data" %}
+      </a>
+  </div>
+{% endblock %}
+
+
+{% block options %}
+<a href="{% url 'manager:workout:add' %}" class="btn btn-success btn-sm">
+    {% trans "Add workout" %}
+</a>
+{% endblock %}

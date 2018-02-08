@@ -81,7 +81,9 @@ class ExerciseIndexTestCase(WorkoutManagerTestCase):
         self.assertEqual(category_1.id, 2)
         self.assertEqual(category_1.name, "Another category")
 
-        category_2 = response.context['exercises'][1].category
+        # The order of the categories changed if a user is allowed to 
+        # view exercise for all languages at first galance.
+        category_2 = response.context['exercises'][2].category
         self.assertEqual(category_2.id, 3)
         self.assertEqual(category_2.name, "Yet another category")
 

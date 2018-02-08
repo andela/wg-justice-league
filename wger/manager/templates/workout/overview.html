@@ -40,8 +40,9 @@
 {#         #}
 {% block export %}
 <div class="btn-group">
-    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" >
+  <a href="{% url 'manager:workout:export' %}"
+     class="btn btn-primary btn-sm dropdown-toggle" >
         {% trans "Export Workouts" %}
-    </button>
+  </a>
 </div>
 {% endblock %}

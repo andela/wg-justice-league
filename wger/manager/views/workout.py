@@ -14,14 +14,20 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
+import csv
 import logging
 import uuid
 import datetime
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import (
+    HttpResponse,
+    HttpResponseRedirect,
+    HttpResponseForbidden,
+)
 from django.template.context_processors import csrf
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.utils.encoding import smart_str
 from django.utils.translation import ugettext_lazy, ugettext as _
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -56,6 +62,49 @@ def overview(request):
     template_data['current_workout'] = current_workout
 
     return render(request, 'workout/overview.html', template_data)
+
+
+@login_required
+def export(request):
+    '''
+    Handles processing of a user's workouts
+    '''
+
+    all_workouts = Workout.objects.filter(user=request.user)
+    field_names = ['ID', 'Comment', 'Creation Date']
+    with open('/tmp/workouts.csv', 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=field_names)
+        writer.writeheader()
+        for workout in all_workouts:
+            writer.writerow({
+                'ID': workout.id,
+                'Comment': workout.comment,
+                'Creation Date': workout.creation_date.strftime(
+                    '%Y-%m-%d %H:%M:%S'
+                )
+            })
+
+    return render(
+        request, 'workout/export.html', content_type="text/html"
+    )
+
+
+@login_required
+def download_export(request):
+    '''
+    Handles processing of a user's workouts
+    '''
+
+    fp = open('/tmp/workouts.csv')
+    response = HttpResponse(
+        fp.read(), content_type='application/force-download'
+    )
+    fp.close()
+    response['Content-Disposition'] = 'attachment; filename={}'.format(
+        smart_str('workouts.csv')
+    )
+
+    return response
 
 
 def view(request, pk):

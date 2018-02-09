@@ -67,6 +67,20 @@
 {% block content %}
 <table class="table">
     <tr>
+        <th style="width: 30%;">{% trans "Plan" %}</th>
+        {% if schedule.schedule_plan %}
+            {% if schedule.select_plan == "3" %}
+                <td>Macrocyle</td>
+            {% elif schedule.select_plan == "2" %}
+                <td>Mesocycle</td>
+            {% else %}
+                <td>Microcycle</td>
+            {% endif %}
+        {% else %}
+            <td>N/A</td>
+        {% endif %}
+    </tr>
+    <tr>
         <th style="width: 30%;">{% trans "Start date" %}</th>
         <td>{{schedule.start_date}}</td>
     </tr>

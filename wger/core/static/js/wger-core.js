@@ -634,6 +634,9 @@ function wgerGetWorkoutSession() {
 }
 
 $(document).ready(function () {
+  var i = 0;
+  var planName = '';
+  var radioBtn = '';
   // Handle the workout PDF download options for workouts
   $('#download-pdf-button').click(function (e) {
     var targetUrl;
@@ -696,5 +699,44 @@ $(document).ready(function () {
       '/' + uid +
       '/' + token;
     window.location.href = targetUrl;
+  });
+  // Handle show workout plan when the checkbox is checked
+  for (i = 1; i <= 3; i++) {
+    if (i === 3) {
+      planName = 'Macrocycle';
+    } else if (i === 2) {
+      planName = 'Mesocycle';
+    } else {
+      planName = 'Microcycle';
+    }
+    radioBtn = radioBtn + "<li class='planOption'><label for='" + planName + "'>" + planName +
+    "</label><input type='radio' class='plan_option' id='"
+    + i + "'></li>";
+  }
+  $('#ajax-info-content').hover(function () {
+    var triggerPlans = $(this).children()[0][5];
+    var planKind = $(this).children()[0];
+    var kinds = $(planKind).children()[6];
+    var showPlans = $(planKind).children()[5];
+    $('.cycleContainer').remove();
+    $(triggerPlans).attr('checked', false);
+    $(triggerPlans).click(function () {
+      if (triggerPlans.checked) {
+        if ($(showPlans).children().length < 2) {
+          $(showPlans).append('<div class="cycleContainer col-sm-8"><ul class="list-inline">'
+          + radioBtn + '</ul></div>');
+        }
+      } else {
+        $('.cycleContainer').remove();
+        $(kinds).css('display', 'none');
+      }
+      $('.plan_option').click(function () {
+        if (this.checked) {
+          $('.cycleContainer').find('input[type=radio]').not(this)
+          .prop('checked', false);
+          $(kinds).val($(this).attr('id'));
+        }
+      });
+    });
   });
 });

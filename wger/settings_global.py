@@ -46,6 +46,11 @@ SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('SOCIAL_AUTH_TWITTER_SECRET')
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 
+# Fitbit client's secret and id
+FITBIT_CLIENT_ID = os.environ.get('FITBIT_CLIENT_ID')
+FITBIT_CLIENT_SECRET = os.environ.get('FITBIT_CLIENT_SECRET')
+FITBIT_CALLBACK_URI = os.environ.get('FITBIT_CALLBACK_URI')
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',

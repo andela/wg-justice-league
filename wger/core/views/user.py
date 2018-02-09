@@ -273,9 +273,9 @@ def fitbit_sync(request, code="None"):
     Get user weight from fitbit
     '''
     template_data = {}
-    client_id = settings.FITBIT_CLIENT_ID
-    client_secret = settings.FITBIT_CLIENT_SECRET
-    redirect_url = settings.FITBIT_CALLBACK_URI
+    client_id = os.environ.get('FITBIT_CLIENT_ID')
+    client_secret = os.environ.get('FITBIT_CLIENT_SECRET')
+    redirect_url = os.environ.get('FITBIT_CALLBACK_URI')
 
     fitbit_client = fitbit.FitbitOauth2Client(client_id, client_secret)
 
